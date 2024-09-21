@@ -1,0 +1,12 @@
+import requests
+from bs4 import BeautifulSoup
+import logging
+
+def scrape_data(url):
+    try:
+        response = requests.get(url)
+        soup = BeautifulSoup(response.content, 'html.parser')
+        return soup.prettify()
+    except Exception as e:
+        logging.error(f"Failed to scrape data from {url}: {e}")
+        return None

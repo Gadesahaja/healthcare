@@ -1,0 +1,14 @@
+import paramiko
+import logging
+
+def transfer_file(ip, username, password, local_file, remote_file):
+    try:
+        transport = paramiko.Transport((ip, 22))
+        transport.connect(username=username, password=password)
+        sftp = paramiko.SFTPClient.from_transport(transport)
+        sftp.put(local_file, remote_file)
+        sftp.close()
+        transport.close()
+        logging.info(f"File transferred to {ip}")
+    except Exception as e:
+        logging.error(f"File transfer failed: {e}")
